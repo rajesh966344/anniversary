@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Anniversary giftcard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(to bottom right, #ffafbd, #ffc3a0);
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        .heart {
+            color: red;
+            animation: beat 1s infinite;
+        }
+        @keyframes beat {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .heart-icon {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-size: cover;
+            opacity: 0.8;
+            animation: floatHeart 5s linear infinite;
+        }
+        @keyframes floatHeart {
+            0% {
+                transform: translate(50vw, 100vh) scale(0.5);
+                opacity: 1;
+            }
+            25% {
+                transform: translate(55vw, 75vh) scale(0.6);
+            }
+            50% {
+                transform: translate(50vw, 50vh) scale(0.7);
+            }
+            75% {
+                transform: translate(45vw, 25vh) scale(0.8);
+            }
+            100% {
+                transform: translate(50vw, -10vh) scale(1.0);
+                opacity: 0;
+            }
+        }
+        .sliding-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #4a4a4a;
+            white-space: pre-wrap;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-start min-h-screen text-center">
+    <!-- Floating Hearts -->
+    <div class="floating-hearts" id="floatingHearts"></div>
+
+    <!-- Greeting Card Section -->
+    <div class="bg-white shadow-lg rounded-2xl p-6 max-w-md mt-10">
+        <h1 class="text-3xl font-bold text-pink-500">🥳HAPPY 1ST YEAR ANNIVERSARY AISHU🌹🫂</h1>
+        <h2>My forever love🧿🥰❤</h2>
+        <div id="slidingText" class="sliding-text mt-4"></div>
+    </div>
+
+    <!-- Spotify Playlist Section -->
+    <div class="bg-white shadow-lg rounded-2xl p-6 mt-8 max-w-md">
+        <h2 class="text-2xl font-semibold text-pink-500">Listen on Spotify</h2>
+        <p class="mt-2 text-gray-600">Your HERS playlist has been updated with latest songs!🥳🎶🎻  small gift for you💐:</p>
+        <a
+            href="https://open.spotify.com/playlist/1yd9CzxgfPaUd0Xkpx6Dr3?si=vdKl2G5VQyWCtstNWqPrVQ%0A"
+            target="_blank"
+            class="mt-4 inline-block bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring"
+        >
+            Open Spotify Playlist
+        </a>
+        <div class="mt-4">
+            <iframe
+                src="https://open.spotify.com/embed/playlist/1yd9CzxgfPaUd0Xkpx6Dr3?si=vdKl2G5VQyWCtstNWqPrVQ%0A"
+                width="100%"
+                height="80"
+                frameborder="0"
+                allowtransparency="true"
+                allow="encrypted-media"
+            ></iframe>
+        </div>
+    </div>
+
+    <script>
+        function createHeart() {
+            const heartColors = ['pink', 'red', 'gold'];
+            const heartContainer = document.getElementById('floatingHearts');
+
+            const heart = document.createElement('div');
+            heart.classList.add('heart-icon');
+            heart.style.left = Math.random() * 20 + 40 + 'vw'; // Constrain to the heart-shaped path
+            heart.style.animationDuration = Math.random() * 3 + 3 + 's';
+            heart.style.backgroundColor = heartColors[Math.floor(Math.random() * heartColors.length)];
+
+            heartContainer.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        setInterval(createHeart, 300);
+
+        const content = `To my Bujji❤\nFirstly I'm very sorry. I shouldn't give reasons for such an important day of ours. But I didn't know that today was May 17. Today is very much special for me. Last year before this day I never thought about how my life will change with ur presence. But see me, see us now. Hard to agree that 1 year is done. It went like zuppp 🚀😂 too fast. Even my whole fadable life will not be enough for me when I'm with you. Wish to have an eternal life with you pattu🥰.within this one year we fought alot for my mistakes. But trust me. No matter how worst the argument goes, I'll never leave you alone. I'm changing myself gradually to give an perfect life to you and ik you are taking much more efforts than me coz we both know it. Perfection is made and not found. Thank you for everything my love ❤I will choose you over anything and everything. And it goes on choosing you again and again and again.\n\n🥳HAPPY 1ST YEAR ANNIVERSARY AISHU🌹🫂❤\nMy forever love\n\n We missed to celebrate today
+But will always remember it 
+Very soon I'll meet you. Then the celebration will begin😚❤`;
+
+        const slidingText = document.getElementById('slidingText');
+        let index = 0;
+        const interval = 60000 / content.length; // Calculate the interval based on 1 minute
+
+        function showNextCharacter() {
+            if (index < content.length) {
+                slidingText.textContent += content[index];
+                index++;
+                setTimeout(showNextCharacter, interval);
+            }
+        }
+
+        showNextCharacter();
+
+        // Play the song when the page loads
+        window.onload = function () {
+            const audio = new Audio('hersong.mp3');
+            audio.loop = true;
+
+            audio.play().catch(() => {
+                // If autoplay is blocked, show a play button
+                const playButton = document.createElement('button');
+                playButton.textContent = 'Play Song';
+                playButton.className = 'bg-pink-500 text-white font-bold py-4 px-8 rounded-xl shadow-lg text-xl focus:outline-none hover:bg-pink-600';
+                playButton.style.position = 'absolute';
+                playButton.style.top = '50%';
+                playButton.style.left = '50%';
+                playButton.style.transform = 'translate(-50%, -50%)';
+                playButton.style.zIndex = '1000';
+
+                playButton.onclick = () => {
+                    audio.play();
+                    playButton.remove();
+                };
+                document.body.appendChild(playButton);
+            });
+        };
+    </script>
+</body>
+</html>
